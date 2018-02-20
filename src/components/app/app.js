@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './app.css';
 
 import Header from '../header/header';
+import EventList from '../local_events/event_list';
 
 class App extends Component {
   render() {
@@ -10,7 +11,7 @@ class App extends Component {
       <div className="App">
         <Header />
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          <EventList />
         </p>
       </div>
     );

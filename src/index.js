@@ -1,12 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 
 import App from './components/app/app';
+import reducers from './reducers';
 
 import registerServiceWorker from './registerServiceWorker';
+
+const createStoreWithMiddleware = applyMiddleware()(createStore);
 
 const Root = () => {
     return (
@@ -16,5 +21,9 @@ const Root = () => {
     )
 }
 
-ReactDOM.render(<Root />, document.getElementById('root'));
+ReactDOM.render(
+    <Provider store={createStoreWithMiddleware(reducers)}>
+        <Root />
+    </Provider>, document.getElementById('root'));
+
 registerServiceWorker();
