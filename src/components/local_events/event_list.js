@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
+import Event from './event';
+
+import './local_events.css';
+
 class EventList extends Component {
 
     componentWillMount() {
@@ -10,17 +14,26 @@ class EventList extends Component {
 
     renderEventList(localEvent) {
          return (
-             <li key={ localEvent.id }>
-                { localEvent.description }
-             </li>
-         )
+            <Event key={ localEvent.id } localEvent={localEvent} />
+         );
     }
 
     render() {
         return (
-            <ul className="event-list">
-                { this.props.localEvents.map(this.renderEventList) }
-            </ul>
+            <table className="event-list table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Summary</th>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    { this.props.localEvents.map(this.renderEventList) }
+                </tbody>                
+            </table>
         )
     }
 }

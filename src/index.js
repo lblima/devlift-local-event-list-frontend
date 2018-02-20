@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+// import ReduxPromisse from 'redux-promise';
+import AsyncPromisse from './middleware/async';
 import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
@@ -11,7 +13,7 @@ import reducers from './reducers';
 
 import registerServiceWorker from './registerServiceWorker';
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+const createStoreWithMiddleware = applyMiddleware(AsyncPromisse)(createStore);
 
 const Root = () => {
     return (
