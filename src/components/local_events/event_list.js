@@ -19,21 +19,13 @@ class EventList extends Component {
     }
 
     render() {
-        return (
-            <table className="event-list table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Summary</th>
-                        <th>Date</th>
-                        <th>Type</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
+        return (    
+            <div className="container">       
+                <h1>Upcoming Events</h1> 
+                <div className="row">
                     { this.props.localEvents.map(this.renderEventList) }
-                </tbody>                
-            </table>
+                </div>
+            </div>
         )
     }
 }
