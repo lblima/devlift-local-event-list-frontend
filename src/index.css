@@ -21,3 +21,7 @@ footer{
   padding: 3em 0;
   text-align: center;
 }
+
+form button {
+  margin-left: 5px
+}

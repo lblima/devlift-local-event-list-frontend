@@ -19,3 +19,13 @@ export function fetchEventTypes() {
         payload: request
     }
 }
+
+export function createEvent(value, callback) {
+    const request = axios.post("http://localhost:52344/api/event", value)
+        .then(() => callback());
+
+    return {
+        type: FETCH_EVENT_TYPES,
+        payload: request
+    }
+}

@@ -1,8 +1,6 @@
 import React from 'react';
 
 import img_event1 from '../../event-01.jpg';
-import img_event2 from '../../event-02.jpg';
-import img_event3 from '../../event-03.jpg';
 
 export default ({localEvent}) => {
     const price = localEvent.price == 0 ? 'Free' : new Intl.NumberFormat('en-CA', 
@@ -10,7 +8,7 @@ export default ({localEvent}) => {
                     currency: 'CAD' 
                 }).format(localEvent.price);
 
-    const imgUrl = localEvent.imageLink != null ? localEvent.imageLink : img_event2;
+    const imgUrl = localEvent.imageLink != null ? localEvent.imageLink : img_event1;
 
     return (
         <div className="local-event col-md-4">
