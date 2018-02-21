@@ -19,6 +19,9 @@ class EventList extends Component {
     }
 
     render() {
+        if (!this.props.localEvents)
+            return <div>loading...</div>
+            
         return (    
             <div className="container">       
                 <h1>Upcoming Events</h1> 

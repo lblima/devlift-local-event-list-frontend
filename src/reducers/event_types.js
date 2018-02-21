@@ -4,7 +4,7 @@ export default (state = [], action) => {
 
     switch(action.type){
         case FETCH_EVENT_TYPES:
-            return [...action.paylaod.data]
+            return [...action.payload.data]
     }
 
     return state;

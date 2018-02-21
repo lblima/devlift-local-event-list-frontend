@@ -1,14 +1,15 @@
 import React from 'react';
-
+import moment from 'moment';
 import img_event1 from '../../event-01.jpg';
 
 export default ({localEvent}) => {
-    const price = localEvent.price == 0 ? 'Free' : new Intl.NumberFormat('en-CA', 
+    const price = localEvent.price === 0 ? 'Free' : new Intl.NumberFormat('en-CA', 
                 {   style: 'currency', 
                     currency: 'CAD' 
                 }).format(localEvent.price);
 
     const imgUrl = localEvent.imageLink != null ? localEvent.imageLink : img_event1;
+    const eventDate = moment(localEvent.date).format('MMMM Do YYYY, h:mm:ss').toString();
 
     return (
         <div className="local-event col-md-4">
@@ -18,8 +19,8 @@ export default ({localEvent}) => {
             <h5 className="card-title">{ localEvent.description }<span> ({ price })</span></h5>
             <p className="card-text">{ `${localEvent.summary.substring(0, 80)}...` }</p>
             <div className="d-flex justify-content-between align-items-center">
-              <span className="badge badge-light">{ localEvent.type.description }</span>
-              <small className="text-muted">{ localEvent.date }</small>
+              <span className="badge badge-light">{ localEvent.typeDescription }</span>
+              <small className="text-muted">{ eventDate }</small>
             </div>
           </div>
         </div>

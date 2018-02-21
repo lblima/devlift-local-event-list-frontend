@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_LOCAL_EVENTS, FETCH_EVENT_TYPES } from './types';
+import { FETCH_LOCAL_EVENTS, FETCH_EVENT_TYPES, CREATE_EVENT } from './types';
 
 export function fetchLocalEvents() {
 
@@ -25,7 +25,7 @@ export function createEvent(value, callback) {
         .then(() => callback());
 
     return {
-        type: FETCH_EVENT_TYPES,
+        type: CREATE_EVENT,
         payload: request
     }
 }
