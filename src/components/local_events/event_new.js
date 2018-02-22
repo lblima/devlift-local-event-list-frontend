@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import EventTypeNew from '../event_type/event_type_new';
+import { PulseLoader } from 'halogenium';
 
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
@@ -109,6 +110,15 @@ class EventNew extends Component {
         );
     }
 
+    renderEventTypeForm() {
+        let eventTypeNew = <span></span>;
+
+        if (this.props.eventType.isEventTypeFormVisible)
+            eventTypeNew = <EventTypeNew />
+
+        return eventTypeNew;
+    }
+
     onSubmit(values) {
         this.props.createEvent(values, () => {
             this.props.history.push("/");
@@ -117,15 +127,12 @@ class EventNew extends Component {
 
     render() {
         const { handleSubmit } = this.props;
-        const classEventType = this.props.eventType.isEventTypeFormVisible ? 'show-component' : 'hide-component';
 
-        if (!this.props.eventType.data)
-            return <div>loading...</div>
-
-        let eventTypeNew = <span></span>;
-
-        if (this.props.eventType.isEventTypeFormVisible)
-            eventTypeNew = <EventTypeNew />
+        if (!this.props.eventType.data) {
+            return (
+                <div className="loading"></div>
+            )
+        }
 
         return (
             <div className="event-new container">
@@ -141,7 +148,7 @@ class EventNew extends Component {
                         <button type="button" onClick={ () => this.showNewEventTypeForm() } className="btn btn-primary float-left">New Event Type</button>
                     </span> */}
 
-                    { eventTypeNew }
+                    { this.renderEventTypeForm() }
 
                     <Field 
                         label="Description"
@@ -195,9 +202,6 @@ function validate(values) {
 
     if (!values.date)
         errors.date = "Choose an event date";
-
-    if (!values.price)
-        errors.price = "Entrar the event price. If it´s a free event, enter 0";
 
     return errors;
 }

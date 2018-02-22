@@ -7,11 +7,3 @@
 th, td {
     text-align: left;
 }
-
-.hide-component {
-    display: none;
-}
-
-.show-component {
-    display: block;
-}

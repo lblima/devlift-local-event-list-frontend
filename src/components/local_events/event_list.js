@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import { PulseLoader } from 'halogenium';
 
 import Event from './event';
 
@@ -19,11 +20,14 @@ class EventList extends Component {
     }
 
     render() {
-        if (!this.props.localEvent)
-            return <div>loading...</div>
+        if (!this.props.localEvent || this.props.localEvent.length === 0) {
+            return (
+                <div className="loading"></div>
+            )
+        }
             
         return (    
-            <div className="container">       
+            <div className="event-list-container container">       
                 <h1>Upcoming Events</h1> 
                 <div className="row">
                     { this.props.localEvent.map(this.renderEventList) }

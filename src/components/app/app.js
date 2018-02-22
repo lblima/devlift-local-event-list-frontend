@@ -12,13 +12,14 @@ import Footer from '../footer/footer';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="app-container">
         <Header />
-        {/* <EventList /> */}
-        <Switch>
-            <Route exact path="/" component={ EventList } />
-            <Route exact path="/newevent" component={ EventNew } />
-        </Switch>
+        <div className="body-container">
+          <Switch>
+              <Route exact path="/" component={ EventList } />
+              <Route exact path="/newevent" component={ EventNew } />
+          </Switch>
+        </div>
         <Footer />
       </div>
     );

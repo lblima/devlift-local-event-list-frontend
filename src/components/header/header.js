@@ -7,7 +7,7 @@ import logo from '../../devlift-logo.svg';
 export default () => {
     return (
         <header>
-            <div className="header container">
+            <div className="header-container container">
                 <img src={logo}  alt="Devlift" />
                 <Link to="/newevent" className="btn btn-primary float-right">Add new event</Link>
             </div>
