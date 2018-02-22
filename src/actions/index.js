@@ -14,7 +14,10 @@ export function fetchLocalEvents() {
 
 export function createEvent(value, callback) {
     const request = axios.post("http://localhost:52344/api/event", value)
-        .then(() => callback());
+        .then(() => callback())
+        .catch(function (error) {
+            console.log(error);
+          });
 
     return {
         type: CREATE_EVENT,
@@ -33,7 +36,10 @@ export function fetchEventTypes() {
 
 export function createEventType(value, callback) {
     const request = axios.post("http://localhost:52344/api/eventtype", value)
-        .then(() => callback());
+        .then(() => callback())
+        .catch(function (error) {
+            console.log(error);
+          });
 
     return {
         type: CREATE_EVENT_TYPE,

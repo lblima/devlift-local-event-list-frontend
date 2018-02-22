@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import EventTypeNew from '../event_type/event_type_new';
-import { PulseLoader } from 'halogenium';
-
+import CurrencyInput from 'react-currency-input';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -23,16 +22,23 @@ class EventNew extends Component {
 
     renderFieldText(field) {
         const { meta: { touched, error } } = field;
-        const className = `form-group col-md-8 ${ touched && error ? 'has-danger' : '' }`;
+        let className = `form-group col-md-8 ${ touched && error ? 'has-danger' : '' }`;
+        let inputField =    <input className="form-control" 
+                                type="text"
+                                { ...field.input }
+                            />
+
+        if (field.input.name == "price") {
+            className = `form-group col-md-2 ${ touched && error ? 'has-danger' : '' }`;
+            inputField = <CurrencyInput className="form-control"  
+                            { ...field.input } 
+                        />
+        }
 
         return (
             <div className={ className }>
                 <label>{ field.label }</label>
-                <input className="form-control" 
-                    type="text"
-                    { ...field.input }
-                />
-
+                { inputField }
                 <div className="text-danger">
                     { touched ? error: '' }
                 </div>
@@ -60,18 +66,21 @@ class EventNew extends Component {
 
     renderFieldSelect(field) {
         const { children, meta: { touched, error } } = field;
-        const className = `form-group col-md-4 ${ touched && error ? 'has-danger' : '' }`;
+        const className = `form-inline ${ touched && error ? 'has-danger' : '' }`;
 
         return (
             <div className={ className }>
-                <label>{ field.label }</label>
-                <select className="form-control"  { ...field.input }>
-                    { children }
-                </select>
-               
-                <div className="text-danger">
-                    { touched ? error: '' }
+                <div className="event-type-select mx-sm-3 mb-2">
+                    <label>{ field.label }</label>
+                    <select className="form-control"  { ...field.input }>
+                        { children }
+                    </select>
+
+                     <div className="text-danger">
+                        { touched ? error: '' }
+                    </div>
                 </div>
+                <button type="button" onClick={ () => this.showNewEventTypeForm() } className="btn btn-primary float-left">New Event Type</button>
             </div>
         )
     }
@@ -120,6 +129,7 @@ class EventNew extends Component {
     }
 
     onSubmit(values) {
+        console.log(values);
         this.props.createEvent(values, () => {
             this.props.history.push("/");
         });
@@ -139,14 +149,10 @@ class EventNew extends Component {
 
                 <h1>New Local Event</h1> 
                 <form onSubmit={ handleSubmit(this.onSubmit.bind(this)) } className="form-horizontal">
-                    <Field name="typeId" label="Event Type" component={ this.renderFieldSelect }>
+                    <Field name="typeId" label="Event Type" component={ this.renderFieldSelect.bind(this) }>
                         <option></option>
                         { this.renderEventTypesOptions() }
                     </Field>
-
-                     {/* <span className="form-group-btn">
-                        <button type="button" onClick={ () => this.showNewEventTypeForm() } className="btn btn-primary float-left">New Event Type</button>
-                    </span> */}
 
                     { this.renderEventTypeForm() }
 
@@ -179,7 +185,6 @@ class EventNew extends Component {
                     <div className="form-group col-md-8">
                         <button type="submit" className="btn btn-primary float-left">Submit</button>
                         <Link to="/" className="btn btn-danger btn-cancel float-left">Cancel</Link>
-                        <button type="button" onClick={ () => this.showNewEventTypeForm() } className="btn btn-primary float-left">New Event Type</button>
                     </div>
                 </form>
             </div>
@@ -196,6 +201,9 @@ function validate(values) {
 
     if (!values.description)
         errors.description = "Enter a description";
+
+    if (values.description && values.description.length < 3)
+        errors.description = "Please enter more than 3 characters";
     
     if (!values.summary)
         errors.summary = "Enter a Summary. It´s a more detailed description about the event";

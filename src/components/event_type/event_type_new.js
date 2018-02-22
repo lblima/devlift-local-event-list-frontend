@@ -5,14 +5,18 @@ import { connect } from 'react-redux';
 class EventTypeNew extends Component {
 
     addNewEventType() {
-        const newEventType = {
-            description: this.refs.event_type_description.value
-        }
+        const value = this.refs.event_type_description.value;
 
-        this.props.createEventType(newEventType, () => {
-            this.props.fetchEventTypes();
-            this.props.hideEventType();
-        });
+        if (value) {
+            const newEventType = {
+                description: this.refs.event_type_description.value
+            }
+
+            this.props.createEventType(newEventType, () => {
+                this.props.fetchEventTypes();
+                this.props.hideEventType();
+            });
+        }
     }
 
     cancel() {
@@ -30,24 +34,16 @@ class EventTypeNew extends Component {
     }
 
     render() {
-        return (            
-            <div className="row event-type-new">
-                <div className="form-group form-group-sm col-sm-4">
-                    <div className="row">
-                        <div className="col-sm-9">
-                            { this.renderTextBox() }
-                        </div>
-                    </div>
+        return (
+            <div className="form-inline" style={{ marginBottom: 20 + "px" }}>
+                <div className="alert alert-primary" role="alert">
+                    Write in the box below your new event type.
                 </div>
-
-                <div className="form-group form-group-sm col-sm-4">
-                    <div className="row">
-                        <div className="col-sm-9">
-                            <button type="button" className="btn btn-primary float-left" onClick={ this.addNewEventType.bind(this) }>Add</button>
-                            <button type="button" className="btn btn-danger btn-cancel float-left" onClick={ this.cancel.bind(this)}>Cancel</button>
-                        </div>
-                    </div>
+                <div className="form-group mx-sm-3 mb-2">
+                    { this.renderTextBox() }
                 </div>
+                <button type="button" className="btn btn-primary mb-2" onClick={ this.addNewEventType.bind(this) }>Add</button>
+                <button type="button" className="btn btn-danger btn-cancel mb-2" onClick={ this.cancel.bind(this)}>Cancel</button>
             </div>
         )
     }

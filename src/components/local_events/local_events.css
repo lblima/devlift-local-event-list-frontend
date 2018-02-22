@@ -4,6 +4,25 @@
     margin-right: 5%;
 }
 
-th, td {
+th,
+td {
     text-align: left;
+}
+
+.alert-primary {
+    margin: 10px 15px;
+    width: 100%;
+}
+
+.event-type-select {
+    min-height: 90px;
+}
+
+.event-type-select label {
+    display: block;
+    margin-bottom: .5em;
+}
+
+.event-type-select select {
+    width: 17em !important;
 }
