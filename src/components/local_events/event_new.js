@@ -3,20 +3,21 @@ import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import EventTypeNew from '../event_type/event_type_new';
 
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
+import './local_events.css';
 
 class EventNew extends Component {
-    
-    constructor(props) {
-        super(props);
 
-        this.renderFieldDateTime = this.renderFieldDateTime.bind(this);        
-    }
     componentWillMount() {
         this.props.fetchEventTypes();
+    }
+
+    showNewEventTypeForm() {
+        this.props.showEventType();
     }
 
     renderFieldText(field) {
@@ -66,7 +67,7 @@ class EventNew extends Component {
                 <select className="form-control"  { ...field.input }>
                     { children }
                 </select>
-
+               
                 <div className="text-danger">
                     { touched ? error: '' }
                 </div>
@@ -101,7 +102,7 @@ class EventNew extends Component {
 
     renderEventTypesOptions() {
         return (
-            this.props.eventTypes.map(et => <option 
+            this.props.eventType.data.map(et => <option 
                                                 key={ et.id } 
                                                 value={ et.id }>{ et.description }
                                             </option>)
@@ -110,25 +111,38 @@ class EventNew extends Component {
 
     onSubmit(values) {
         this.props.createEvent(values, () => {
-            console.log("OK");
             this.props.history.push("/");
         });
     }
 
     render() {
         const { handleSubmit } = this.props;
+        const classEventType = this.props.eventType.isEventTypeFormVisible ? 'show-component' : 'hide-component';
 
-        if (!this.props.eventTypes)
+        if (!this.props.eventType.data)
             return <div>loading...</div>
 
+        let eventTypeNew = <span></span>;
+
+        if (this.props.eventType.isEventTypeFormVisible)
+            eventTypeNew = <EventTypeNew />
+
         return (
-            <div className="container">
+            <div className="event-new container">
+
                 <h1>New Local Event</h1> 
-                <form onSubmit={ handleSubmit(this.onSubmit.bind(this)) }>
+                <form onSubmit={ handleSubmit(this.onSubmit.bind(this)) } className="form-horizontal">
                     <Field name="typeId" label="Event Type" component={ this.renderFieldSelect }>
                         <option></option>
                         { this.renderEventTypesOptions() }
                     </Field>
+
+                     {/* <span className="form-group-btn">
+                        <button type="button" onClick={ () => this.showNewEventTypeForm() } className="btn btn-primary float-left">New Event Type</button>
+                    </span> */}
+
+                    { eventTypeNew }
+
                     <Field 
                         label="Description"
                         name="description"
@@ -137,7 +151,7 @@ class EventNew extends Component {
                     <Field 
                         label="Date"
                         name="date"
-                        component={ this.renderFieldDateTime }
+                        component={ this.renderFieldDateTime.bind(this) }
                     />
                     <Field 
                         label="Summary"
@@ -157,7 +171,8 @@ class EventNew extends Component {
 
                     <div className="form-group col-md-8">
                         <button type="submit" className="btn btn-primary float-left">Submit</button>
-                        <Link to="/" className="btn btn-danger float-left">Cancel</Link>
+                        <Link to="/" className="btn btn-danger btn-cancel float-left">Cancel</Link>
+                        <button type="button" onClick={ () => this.showNewEventTypeForm() } className="btn btn-primary float-left">New Event Type</button>
                     </div>
                 </form>
             </div>
@@ -187,8 +202,8 @@ function validate(values) {
     return errors;
 }
 
-function mapStateToProps({ eventTypes }) {
-    return { eventTypes };
+function mapStateToProps({ eventType }) {
+    return { eventType };
 }
 
 export default reduxForm({

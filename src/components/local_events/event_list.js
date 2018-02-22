@@ -19,22 +19,22 @@ class EventList extends Component {
     }
 
     render() {
-        if (!this.props.localEvents)
+        if (!this.props.localEvent)
             return <div>loading...</div>
             
         return (    
             <div className="container">       
                 <h1>Upcoming Events</h1> 
                 <div className="row">
-                    { this.props.localEvents.map(this.renderEventList) }
+                    { this.props.localEvent.map(this.renderEventList) }
                 </div>
             </div>
         )
     }
 }
 
-function mapStateToProps({localEvents}) {
-    return { localEvents };
+function mapStateToProps({localEvent}) {
+    return { localEvent };
 }
 
 export default connect(mapStateToProps, actions)(EventList);

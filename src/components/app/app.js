@@ -6,6 +6,7 @@ import './app.css';
 import Header from '../header/header';
 import EventList from '../local_events/event_list';
 import EventNew from '../local_events/event_new';
+import EventTypeNew from '../event_type/event_type_new';
 import Footer from '../footer/footer';
 
 class App extends Component {

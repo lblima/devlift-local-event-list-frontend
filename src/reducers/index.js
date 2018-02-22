@@ -5,8 +5,8 @@ import EventTypesReducer from './event_types';
 
 const rootReducer = combineReducers({
     form: formReducer,
-    localEvents: LocalEventReducer,
-    eventTypes: EventTypesReducer
+    localEvent: LocalEventReducer,
+    eventType: EventTypesReducer
 });
 
 export default rootReducer;
