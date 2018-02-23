@@ -10,7 +10,7 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import './local_events.css';
 
-class EventNew extends Component {
+class EventEdit extends Component {
 
     componentWillMount() {
         this.props.fetchEventTypes();
@@ -147,6 +147,7 @@ class EventNew extends Component {
 
     render() {
         const { handleSubmit } = this.props;
+        const title = this.props.match.params.id;
 
         if (!this.props.eventType.data) {
             return (
@@ -155,9 +156,9 @@ class EventNew extends Component {
         }
 
         return (
-            <div className="event-new container">
+            <div className="event-edit container">
 
-                <h1>New Local Event</h1> 
+                <h1>Edit Local Event { title }</h1> 
                 <form onSubmit={ handleSubmit(this.onSubmit.bind(this)) } className="form-horizontal">
                     <Field name="typeId" label="Event Type" component={ this.renderFieldSelect.bind(this) }>
                         <option></option>
@@ -242,4 +243,4 @@ function mapStateToProps({ eventType }) {
 export default reduxForm({
     validate,
     form: "EventNewForm"
-})(connect(mapStateToProps, actions)(EventNew));
+})(connect(mapStateToProps, actions)(EventEdit));

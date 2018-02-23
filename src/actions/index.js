@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { FETCH_LOCAL_EVENTS, FETCH_EVENT_TYPES, CREATE_EVENT, 
-            CREATE_EVENT_TYPE, SHOW_HIDE_EVENT_TYPE, SELECT_EVENT_TYPE } from './types';
+            CREATE_EVENT_TYPE, SHOW_HIDE_EVENT_TYPE, SELECT_EVENT_TYPE,
+                FETCH_LOCAL_EVENT } from './types';
 
 export function fetchLocalEvents() {
 
@@ -8,6 +9,16 @@ export function fetchLocalEvents() {
 
     return {
         type: FETCH_LOCAL_EVENTS,
+        payload: request
+    }
+}
+
+export function fetchLocalEvent(id) {
+
+    const request = axios.get(`http://localhost:52344/api/event/${id}`);
+
+    return {
+        type: FETCH_LOCAL_EVENT,
         payload: request
     }
 }

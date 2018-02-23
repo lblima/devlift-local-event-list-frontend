@@ -19,17 +19,19 @@ class EventList extends Component {
     }
 
     render() {
-        if (!this.props.localEvent || this.props.localEvent.length === 0) {
+        if (!this.props.localEvent.data || this.props.localEvent.data.length === 0) {
             return (
                 <div className="loading"></div>
             )
         }
+
+        console.log(this.props.localEvent.data);
             
         return (    
             <div className="event-list-container container">       
                 <h1>Upcoming Events</h1> 
                 <div className="row">
-                    { this.props.localEvent.map(this.renderEventList) }
+                    { this.props.localEvent.data.map(this.renderEventList) }
                 </div>
             </div>
         )

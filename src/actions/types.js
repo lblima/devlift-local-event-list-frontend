@@ -1,4 +1,5 @@
 export const FETCH_LOCAL_EVENTS = 'fetch_local_events';
+export const FETCH_LOCAL_EVENT = 'fetch_local_event';
 export const FETCH_EVENT_TYPES = 'fetch_event_types';
 export const CREATE_EVENT = 'create_event';
 export const CREATE_EVENT_TYPE = 'create_event_type';

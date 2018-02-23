@@ -6,6 +6,7 @@ import './app.css';
 import Header from '../header/header';
 import EventList from '../local_events/event_list';
 import EventNew from '../local_events/event_new';
+import EventEdit from '../local_events/event_edit';
 import Footer from '../footer/footer';
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
           <Switch>
               <Route exact path="/" component={ EventList } />
               <Route exact path="/newevent" component={ EventNew } />
+              <Route exact path="/editevent/:id" component={ EventEdit } />
           </Switch>
         </div>
         <Footer />
