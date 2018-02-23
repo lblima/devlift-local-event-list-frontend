@@ -17,7 +17,7 @@ export default ({localEvent}) => {
           <div className="card mb-4">
             <img className="card-img-top" src={ imgUrl } alt="Card image cap" />
             <div className="card-body">
-                <h5 className="card-title">{ localEvent.description }<span> ({ price })</span></h5>
+                <h5 className="card-title">{ `${localEvent.description.substring(0, 80)}...` }<span> ({ price })</span></h5>
                 <p className="card-text">{ `${localEvent.summary.substring(0, 80)}...` }</p>
                 <div className="d-flex justify-content-between align-items-center">
                     <span className="badge badge-light">{ localEvent.typeDescription }</span>

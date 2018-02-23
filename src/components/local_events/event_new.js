@@ -185,7 +185,7 @@ class EventNew extends Component {
                         component={ this.renderFieldText }
                     />
                     <Field 
-                        label="Image Url"
+                        label="Image Url (jpeg, jpg, gif or png)"
                         name="imageLink"
                         component={ this.renderFieldText }
                     />
@@ -198,6 +198,10 @@ class EventNew extends Component {
             </div>
         );
     }
+}
+
+function checkImageURL(url) {
+    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
 
 function validate(values) {
@@ -220,6 +224,11 @@ function validate(values) {
 
     if (!values.date)
         errors.date = "Choose an event date";
+
+    if (values.imageLink) {
+        if (!checkImageURL(values.imageLink))
+            errors.imageLink = "Invalid image url";
+    }
 
     return errors;
 }
