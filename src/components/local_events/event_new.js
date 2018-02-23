@@ -16,6 +16,15 @@ class EventNew extends Component {
         this.props.fetchEventTypes();
     }
 
+    componentWillUnmount() {
+        this.props.selectEventType(undefined);
+    }
+
+    componentWillUpdate() {
+        if (this.props.eventType.selectedTypeId)
+            this.props.change("typeId", this.props.eventType.selectedTypeId); //Update the EventType Select with the new added EventType
+    }
+
     showNewEventTypeForm() {
         this.props.showEventType();
     }
@@ -72,7 +81,7 @@ class EventNew extends Component {
             <div className={ className }>
                 <div className="event-type-select mx-sm-3 mb-2">
                     <label>{ field.label }</label>
-                    <select className="form-control"  { ...field.input }>
+                    <select className="form-control" { ...field.input }>
                         { children }
                     </select>
 
@@ -129,7 +138,6 @@ class EventNew extends Component {
     }
 
     onSubmit(values) {
-        console.log(values);
         this.props.createEvent(values, () => {
             this.props.history.push("/");
         });
@@ -195,6 +203,8 @@ class EventNew extends Component {
 function validate(values) {
 
     const errors = {};
+
+    // console.log(values);
 
     if (!values.typeId)
         errors.typeId = "Select an event type";

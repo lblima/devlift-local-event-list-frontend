@@ -8,14 +8,20 @@ class EventTypeNew extends Component {
         const value = this.refs.event_type_description.value;
 
         if (value) {
-            const newEventType = {
-                description: this.refs.event_type_description.value
-            }
 
-            this.props.createEventType(newEventType, () => {
-                this.props.fetchEventTypes();
-                this.props.hideEventType();
-            });
+            const eventType = this.props.eventType.data.find(e => e.description == value);
+
+            if (!eventType) {
+                const newEventType = {
+                    description: this.refs.event_type_description.value
+                }
+
+                this.props.createEventType(newEventType, (id) => {
+                    this.props.fetchEventTypes();
+                    this.props.hideEventType();
+                    this.props.selectEventType(id);
+                });
+            }
         }
     }
 
@@ -23,16 +29,6 @@ class EventTypeNew extends Component {
         this.props.hideEventType();
     }
     
-    renderTextBox() {
-        let value = '';
-
-        if (!this.props.eventType.isEventTypeFormVisible) {
-            value = '';
-        }
-
-        return <input type="text" className="form-control" placeholder="Event Type Description" ref="event_type_description" />
-    }
-
     render() {
         return (
             <div className="form-inline" style={{ marginBottom: 20 + "px" }}>
@@ -40,7 +36,7 @@ class EventTypeNew extends Component {
                     Write in the box below your new event type.
                 </div>
                 <div className="form-group mx-sm-3 mb-2">
-                    { this.renderTextBox() }
+                    <input type="text" className="form-control" placeholder="Event Type Description" ref="event_type_description" />
                 </div>
                 <button type="button" className="btn btn-primary mb-2" onClick={ this.addNewEventType.bind(this) }>Add</button>
                 <button type="button" className="btn btn-danger btn-cancel mb-2" onClick={ this.cancel.bind(this)}>Cancel</button>

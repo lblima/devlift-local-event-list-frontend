@@ -26,3 +26,11 @@ td {
 .event-type-select select {
     width: 17em !important;
 }
+
+.event-date {
+    text-align: left;
+}
+
+.btn-edit-event {
+    margin-right: 15px;
+}

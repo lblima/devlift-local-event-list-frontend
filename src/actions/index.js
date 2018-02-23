@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { FETCH_LOCAL_EVENTS, FETCH_EVENT_TYPES, CREATE_EVENT, 
-                CREATE_EVENT_TYPE, SHOW_HIDE_EVENT_TYPE } from './types';
+            CREATE_EVENT_TYPE, SHOW_HIDE_EVENT_TYPE, SELECT_EVENT_TYPE } from './types';
 
 export function fetchLocalEvents() {
 
@@ -14,10 +14,13 @@ export function fetchLocalEvents() {
 
 export function createEvent(value, callback) {
     const request = axios.post("http://localhost:52344/api/event", value)
-        .then(() => callback())
+        .then((response) => {
+            console.log(response);
+            callback()
+        })
         .catch(function (error) {
             console.log(error);
-          });
+        });
 
     return {
         type: CREATE_EVENT,
@@ -36,7 +39,9 @@ export function fetchEventTypes() {
 
 export function createEventType(value, callback) {
     const request = axios.post("http://localhost:52344/api/eventtype", value)
-        .then(() => callback())
+        .then((response) => {
+            callback(response.data.id)
+        })
         .catch(function (error) {
             console.log(error);
           });
@@ -58,5 +63,12 @@ export function hideEventType() {
     return {
         type: SHOW_HIDE_EVENT_TYPE,
         payload: false
+    }
+}
+
+export function selectEventType(value) {
+    return {
+        type: SELECT_EVENT_TYPE,
+        payload: value
     }
 }
