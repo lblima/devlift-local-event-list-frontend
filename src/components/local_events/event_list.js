@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import { fetchLocalEvents } from '../../actions/local_event';
 
 import Event from './event';
 
@@ -24,7 +24,7 @@ class EventList extends Component {
                 <h1>Ops, something went wrong. Try again later.</h1> 
             )
         }
-        
+
         if (!this.props.localEvent.data) {
             return (
                 <div className="loading"></div>
@@ -50,4 +50,4 @@ function mapStateToProps({localEvent}) {
     return { localEvent };
 }
 
-export default connect(mapStateToProps, actions)(EventList);
+export default connect(mapStateToProps, { fetchLocalEvents })(EventList);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as actions from '../../actions';
+import { createEventType, fetchEventTypes, hideEventType, selectEventType } from '../../actions/event_type';
 import { connect } from 'react-redux';
 
 class EventTypeNew extends Component {
@@ -48,4 +48,5 @@ function mapStateToProps({ eventType }) {
     return { eventType };
 }
 
-export default connect(mapStateToProps, actions)(EventTypeNew);
+export default connect(mapStateToProps, { createEventType, fetchEventTypes, 
+                                            hideEventType, selectEventType })(EventTypeNew);

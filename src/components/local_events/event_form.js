@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import  { fetchLocalEvent, deselectEvent, createEvent, updateEvent } from '../../actions/local_event';
+import  { fetchEventTypes, selectEventType, showEventType } from '../../actions/event_type';
 import EventTypeNew from '../event_type/event_type_new';
 import CurrencyInput from 'react-currency-input';
 import DatePicker from 'react-datepicker';
@@ -12,19 +13,11 @@ import './local_events.css';
 
 class EventForm extends Component {
 
-    handlerAjaxError(error) {
-        console.log("handlerAjaxError", error);
-    }
-
-    handlerAjaxSuccess(response) {
-        console.log("handlerAjaxSuccess", response);
-    }
-
     componentWillMount() {
         console.log("componentWillMount")
 
         if (this.props.mode == "edit")
-            this.props.fetchLocalEvent(this.props.match.params.id, this);
+            this.props.fetchLocalEvent(this.props.match.params.id);
 
         this.props.fetchEventTypes();
     }
@@ -290,4 +283,5 @@ EventForm = reduxForm({
     enableReinitialize: true
 })(EventForm);
 
-export default connect(mapStateToProps, actions)(EventForm);
+export default connect(mapStateToProps, { fetchLocalEvent, deselectEvent, createEvent, 
+                        updateEvent, fetchEventTypes, selectEventType, showEventType })(EventForm);
