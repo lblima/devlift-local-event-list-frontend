@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { FETCH_LOCAL_EVENTS, CREATE_EVENT, FETCH_LOCAL_EVENT, UPDATE_EVENT, DESELECT_LOCAL_EVENT } from './types';
+import { FETCH_LOCAL_EVENTS, CREATE_EVENT, FETCH_LOCAL_EVENT, UPDATE_EVENT, 
+                DESELECT_LOCAL_EVENT, DELETE_EVENT, CLEAR_GENERAL_ERROR } from './types';
 
 export function fetchLocalEvents() {
 
@@ -51,9 +52,27 @@ export function updateEvent(id, value, callback) {
     }
 }
 
-export function deselectEvent(value) {
+export function deleteLocalEvent(id, callback) {
+
+    const request = axios.delete(`http://localhost:52344/api/event/${id}`)
+        .then(() => callback());
+
+    return {
+        type: DELETE_EVENT,
+        payload: id
+    }
+}
+
+export function deselectEvent() {
     return {
         type: DESELECT_LOCAL_EVENT,
-        payload: value
+        payload: undefined
+    }
+}
+
+export function clearError() {
+    return {
+        type: CLEAR_GENERAL_ERROR,
+        payload: undefined
     }
 }

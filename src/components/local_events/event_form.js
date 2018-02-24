@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import  { fetchLocalEvent, deselectEvent, createEvent, updateEvent } from '../../actions/local_event';
+import  { fetchLocalEvent, deselectEvent, createEvent, updateEvent, clearError } from '../../actions/local_event';
 import  { fetchEventTypes, selectEventType, showEventType } from '../../actions/event_type';
 import EventTypeNew from '../event_type/event_type_new';
 import CurrencyInput from 'react-currency-input';
@@ -25,13 +25,19 @@ class EventForm extends Component {
     componentWillUnmount() {
         console.log("componentWillUnmount")
         this.props.selectEventType(undefined);
-        this.props.deselectEvent();
+        this.props.clearError();
     }
 
     componentWillUpdate() {
-        console.log("componentWillUpdate")
+        console.log("componentWillUpdate", this.props.mode)
         if (this.props.eventType.selectedTypeId)
             this.props.change("typeId", this.props.eventType.selectedTypeId);
+    }
+
+    componentDidUpdate() {
+        console.log("componentDidUpdate", this.props.mode)
+        if (this.props.mode == "create")
+            this.props.deselectEvent();
     }
 
     showNewEventTypeForm() {
@@ -284,4 +290,4 @@ EventForm = reduxForm({
 })(EventForm);
 
 export default connect(mapStateToProps, { fetchLocalEvent, deselectEvent, createEvent, 
-                        updateEvent, fetchEventTypes, selectEventType, showEventType })(EventForm);
+                        updateEvent, fetchEventTypes, selectEventType, showEventType, clearError })(EventForm);

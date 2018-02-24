@@ -1,8 +1,10 @@
 export const GENERAL_ERROR = 'general_error';
+export const CLEAR_GENERAL_ERROR = 'clear_general_error';
 export const FETCH_LOCAL_EVENTS = 'fetch_local_events';
 export const FETCH_LOCAL_EVENT = 'fetch_local_event';
 export const FETCH_EVENT_TYPES = 'fetch_event_types';
 export const CREATE_EVENT = 'create_event';
+export const DELETE_EVENT = 'delete_event';
 export const UPDATE_EVENT = 'update_event';
 export const CREATE_EVENT_TYPE = 'create_event_type';
 export const SHOW_HIDE_EVENT_TYPE = 'show_hide_event_type';

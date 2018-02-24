@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchLocalEvents } from '../../actions/local_event';
-
 import Event from './event';
 
 import './local_events.css';
+import { isMoment } from 'moment';
 
 class EventList extends Component {
 

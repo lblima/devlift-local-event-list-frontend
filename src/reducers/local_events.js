@@ -1,4 +1,6 @@
-import { FETCH_LOCAL_EVENTS, FETCH_LOCAL_EVENT, DESELECT_LOCAL_EVENT, GENERAL_ERROR } from '../actions/types';
+import _ from 'lodash';
+import { FETCH_LOCAL_EVENTS, FETCH_LOCAL_EVENT, DESELECT_LOCAL_EVENT, 
+            GENERAL_ERROR, CLEAR_GENERAL_ERROR } from '../actions/types';
 
 export default (state = {}, action) => {
 
@@ -13,9 +15,11 @@ export default (state = {}, action) => {
 
             return { ...state, selectedEvent: localEvent };
         case DESELECT_LOCAL_EVENT:
-            return { ...state, selectedEvent: undefined };
+            return { ...state, selectedEvent: action.payload };
         case GENERAL_ERROR:
             return { ...state, error: action.payload };
+        case CLEAR_GENERAL_ERROR:
+            return { ...state, error: undefined };
     }
 
     return state;
