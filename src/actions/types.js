@@ -1,3 +1,4 @@
+export const GENERAL_ERROR = 'general_error';
 export const FETCH_LOCAL_EVENTS = 'fetch_local_events';
 export const FETCH_LOCAL_EVENT = 'fetch_local_event';
 export const FETCH_EVENT_TYPES = 'fetch_event_types';

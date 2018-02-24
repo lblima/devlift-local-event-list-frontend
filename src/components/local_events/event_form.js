@@ -12,11 +12,19 @@ import './local_events.css';
 
 class EventForm extends Component {
 
+    handlerAjaxError(error) {
+        console.log("handlerAjaxError", error);
+    }
+
+    handlerAjaxSuccess(response) {
+        console.log("handlerAjaxSuccess", response);
+    }
+
     componentWillMount() {
         console.log("componentWillMount")
 
         if (this.props.mode == "edit")
-            this.props.fetchLocalEvent(this.props.match.params.id);
+            this.props.fetchLocalEvent(this.props.match.params.id, this);
 
         this.props.fetchEventTypes();
     }
@@ -118,8 +126,8 @@ class EventForm extends Component {
                     dateFormat="YYYY/MM/DD HH:mm"
                     timeCaption="time"
                     minDate={moment()}
-                    minTime={moment()}
-                    maxTime={moment().hours(23).minutes(45)}
+                    // minTime={moment().day().hours(0).minutes(0)}
+                    // maxTime={moment().hours(23).minutes(45)}
                 />
 
                 <div className="text-danger">
@@ -165,6 +173,12 @@ class EventForm extends Component {
         const { handleSubmit } = this.props;
         const selectedEvent = this.props.localEvent.selectedEvent;        
         const pageTitle = this.props.mode == "edit" ? "Edit Local Event": "Create Local Event";
+
+        if (this.props.localEvent.error) {
+            return (
+                <h1>Ops, something went wrong. Try again later.</h1> 
+            )
+        }
 
         if (!this.props.eventType.data || (this.props.mode == "edit" && !selectedEvent)) {
             return (
@@ -243,6 +257,10 @@ function validate(values) {
     if (!values.date)
         errors.date = "Choose an event date";
 
+    if (values.date && moment().diff(values.date, 'minutes') > 0) {
+        errors.date = "Please, choose a future date/time";
+    }
+
     if (values.imageLink) {
         if (!checkImageURL(values.imageLink))
             errors.imageLink = "Invalid image url";
@@ -258,7 +276,7 @@ function mapStateToProps({ eventType, localEvent }) {
         initialValues: {
             typeId: localEvent.selectedEvent ? localEvent.selectedEvent.typeId : '',
             description: localEvent.selectedEvent ? localEvent.selectedEvent.description : '',            
-            date: localEvent.selectedEvent ? localEvent.selectedEvent.date : '',
+            date: localEvent.selectedEvent ? moment(localEvent.selectedEvent.date).format('YYYY/MM/DD HH:mm').toString() : '',
             summary: localEvent.selectedEvent ? localEvent.selectedEvent.summary : '',
             price: localEvent.selectedEvent ? localEvent.selectedEvent.price : '0',            
             imageLink: localEvent.selectedEvent ? localEvent.selectedEvent.imageLink : ''

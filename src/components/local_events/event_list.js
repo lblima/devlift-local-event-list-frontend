@@ -19,7 +19,12 @@ class EventList extends Component {
     }
 
     render() {
-        console.log(this.props.localEvent.data)
+        if (this.props.localEvent.error) {
+            return (
+                <h1>Ops, something went wrong. Try again later.</h1> 
+            )
+        }
+        
         if (!this.props.localEvent.data) {
             return (
                 <div className="loading"></div>

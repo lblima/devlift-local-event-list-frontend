@@ -28,7 +28,7 @@ export function createEvent(value, callback) {
         .then((response) => {
             callback()
         })
-        .catch(function (error) {
+        .catch((error) => {
             console.log(error);
         });
 
@@ -43,7 +43,7 @@ export function updateEvent(id, value, callback) {
         .then((response) => {
             callback()
         })
-        .catch(function (error) {
+        .catch((error) => {
             console.log(error);
         });
 

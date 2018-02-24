@@ -1,4 +1,4 @@
-import { FETCH_EVENT_TYPES, SHOW_HIDE_EVENT_TYPE, SELECT_EVENT_TYPE } from '../actions/types';
+import { FETCH_EVENT_TYPES, SHOW_HIDE_EVENT_TYPE, SELECT_EVENT_TYPE, GENERAL_ERROR } from '../actions/types';
 
 export default (state = { }, action) => {
 
@@ -11,6 +11,8 @@ export default (state = { }, action) => {
             return { ...state, isEventTypeFormVisible: action.payload };
         case SELECT_EVENT_TYPE:
             return { ...state, selectedTypeId: action.payload };
+        case GENERAL_ERROR:
+            return { ...state, error: action.payload };
     }
 
     return state;
