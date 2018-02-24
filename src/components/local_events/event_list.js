@@ -19,17 +19,22 @@ class EventList extends Component {
     }
 
     render() {
-        if (!this.props.localEvent.data || this.props.localEvent.data.length === 0) {
+        console.log(this.props.localEvent.data)
+        if (!this.props.localEvent.data) {
             return (
                 <div className="loading"></div>
             )
         }
-            
+        
         return (    
             <div className="event-list-container container">       
-                <h1>Upcoming Events</h1> 
+                <h1>
+                    {
+                        this.props.localEvent.data.length > 0 ? "Upcoming Events" : "There´s no Upcoming Events"
+                    }
+                </h1> 
                 <div className="row">
-                    { this.props.localEvent.data.map(this.renderEventList) }
+                    { this.props.localEvent.data.length > 0 ? this.props.localEvent.data.map(this.renderEventList) : '' }
                 </div>
             </div>
         )
