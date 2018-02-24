@@ -8,8 +8,8 @@ export default ({localEvent}) => {
                 {   style: 'currency', 
                     currency: 'CAD' 
                 }).format(localEvent.price);
-
-    const imgUrl = localEvent.imageLink != null ? localEvent.imageLink : img_event1;
+                
+    const imgUrl = (localEvent.imageLink != null && localEvent.imageLink != "") ? localEvent.imageLink : img_event1;
     const eventDate = moment(localEvent.date).format('MMMM Do YYYY, h:mm A').toString();
 
     return (

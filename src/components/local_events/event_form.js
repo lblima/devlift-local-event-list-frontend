@@ -10,19 +10,27 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import './local_events.css';
 
-class EventNew extends Component {
+class EventForm extends Component {
 
     componentWillMount() {
+        console.log("componentWillMount")
+
+        if (this.props.mode == "edit")
+            this.props.fetchLocalEvent(this.props.match.params.id);
+
         this.props.fetchEventTypes();
     }
 
     componentWillUnmount() {
+        console.log("componentWillUnmount")
         this.props.selectEventType(undefined);
+        this.props.deselectEvent();
     }
 
     componentWillUpdate() {
+        console.log("componentWillUpdate")
         if (this.props.eventType.selectedTypeId)
-            this.props.change("typeId", this.props.eventType.selectedTypeId); //Update the EventType Select with the new added EventType
+            this.props.change("typeId", this.props.eventType.selectedTypeId);
     }
 
     showNewEventTypeForm() {
@@ -124,9 +132,9 @@ class EventNew extends Component {
     renderEventTypesOptions() {
         return (
             this.props.eventType.data.map(et => <option 
-                                                key={ et.id } 
-                                                value={ et.id }>{ et.description }
-                                            </option>)
+                                                    key={ et.id } 
+                                                    value={ et.id }>{ et.description }
+                                                </option>)
         );
     }
 
@@ -140,24 +148,34 @@ class EventNew extends Component {
     }
 
     onSubmit(values) {
-        this.props.createEvent(values, () => {
-            this.props.history.push("/");
-        });
+        console.log(values)
+        if (this.props.mode == "create") {
+            this.props.createEvent(values, () => {
+                this.props.history.push("/");
+            });
+        }
+        else if (this.props.mode == "edit") {
+            this.props.updateEvent(this.props.match.params.id, values, () => {
+                this.props.history.push("/");
+            });
+        }
     }
 
     render() {
         const { handleSubmit } = this.props;
+        const selectedEvent = this.props.localEvent.selectedEvent;        
+        const pageTitle = this.props.mode == "edit" ? "Edit Local Event": "Create Local Event";
 
-        if (!this.props.eventType.data) {
+        if (!this.props.eventType.data || (this.props.mode == "edit" && !selectedEvent)) {
             return (
                 <div className="loading"></div>
             )
         }
 
         return (
-            <div className="event-new container">
+            <div className="event-edit container">
 
-                <h1>New Local Event</h1> 
+                <h1>{ pageTitle }</h1> 
                 <form onSubmit={ handleSubmit(this.onSubmit.bind(this)) } className="form-horizontal">
                     <Field name="typeId" label="Event Type" component={ this.renderFieldSelect.bind(this) }>
                         <option></option>
@@ -193,7 +211,7 @@ class EventNew extends Component {
                     />
 
                     <div className="form-group col-md-8">
-                        <button type="submit" className="btn btn-primary float-left">Submit</button>
+                        <button type="submit" className="btn btn-primary float-left">Save</button>
                         <Link to="/" className="btn btn-danger btn-cancel float-left">Cancel</Link>
                     </div>
                 </form>
@@ -209,8 +227,6 @@ function checkImageURL(url) {
 function validate(values) {
 
     const errors = {};
-
-    // console.log(values);
 
     if (!values.typeId)
         errors.typeId = "Select an event type";
@@ -235,11 +251,25 @@ function validate(values) {
     return errors;
 }
 
-function mapStateToProps({ eventType }) {
-    return { eventType };
+function mapStateToProps({ eventType, localEvent }) {
+    return { 
+        eventType, 
+        localEvent,
+        initialValues: {
+            typeId: localEvent.selectedEvent ? localEvent.selectedEvent.typeId : '',
+            description: localEvent.selectedEvent ? localEvent.selectedEvent.description : '',            
+            date: localEvent.selectedEvent ? localEvent.selectedEvent.date : '',
+            summary: localEvent.selectedEvent ? localEvent.selectedEvent.summary : '',
+            price: localEvent.selectedEvent ? localEvent.selectedEvent.price : '0',            
+            imageLink: localEvent.selectedEvent ? localEvent.selectedEvent.imageLink : ''
+        }
+    };
 }
 
-export default reduxForm({
+EventForm = reduxForm({
     validate,
-    form: "EventNewForm"
-})(connect(mapStateToProps, actions)(EventNew));
+    form: "EventForm",
+    enableReinitialize: true
+})(EventForm);
+
+export default connect(mapStateToProps, actions)(EventForm);

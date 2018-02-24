@@ -8,7 +8,6 @@ class EventTypeNew extends Component {
         const value = this.refs.event_type_description.value;
 
         if (value) {
-
             const eventType = this.props.eventType.data.find(e => e.description == value);
 
             if (!eventType) {

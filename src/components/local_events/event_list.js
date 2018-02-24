@@ -24,8 +24,6 @@ class EventList extends Component {
                 <div className="loading"></div>
             )
         }
-
-        console.log(this.props.localEvent.data);
             
         return (    
             <div className="event-list-container container">       
