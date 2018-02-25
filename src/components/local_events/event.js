@@ -12,16 +12,15 @@ class Event extends Component {
 
     deleteEvent() {
         confirmAlert({
-            title: 'Confirm to Delete',                        // Title dialog
-            message: 'Are you sure to do this?',               // Message dialog
-            // childrenElement: () => <div>Custom UI</div>,       // Custom UI or Component
-            confirmLabel: 'Confirm',                           // Text button confirm
-            cancelLabel: 'Cancel',                             // Text button cancel
+            title: 'Confirm to Delete',
+            message: 'Are you sure to do this?',
+            // childrenElement: () => <div>Custom UI</div>,    // Custom UI or Component
+            confirmLabel: 'Confirm',
+            cancelLabel: 'Cancel',
             onConfirm: () => this.props.deleteLocalEvent(this.props.localEvent.id, () => {
-                this.props.fetchLocalEvents();
+                this.props.fetchLocalEvents(); 
             }),    
-            // Action after Confirm
-            // onCancel: () => alert('Action after Cancel'),      // Action after Cancel
+            // onCancel: () => alert('Action after Cancel')
         })
     }
 

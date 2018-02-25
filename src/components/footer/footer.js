@@ -6,7 +6,7 @@ export default () => {
         <footer className="footer">
           <div className="container">
             <p>Created and developed for Devlift</p>
-            <span>Copyright © DevLift Media 2017 | All right Reserved</span>
+            <span>Copyright © DevLift Media 2018 | All right Reserved</span>
           </div>
       </footer>
     );
