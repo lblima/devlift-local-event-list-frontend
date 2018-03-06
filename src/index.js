@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 // import ReduxPromise from 'redux-promise';
-import AsyncPromise from './middleware/async';
+// import AsyncPromise from './middleware/async';
+import reduxThunk from  'redux-thunk';
 import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
@@ -13,7 +14,7 @@ import reducers from './reducers';
 
 import registerServiceWorker from './registerServiceWorker';
 
-const createStoreWithMiddleware = applyMiddleware(AsyncPromise)(createStore);
+const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 
 const Root = () => {
     return (

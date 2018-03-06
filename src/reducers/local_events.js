@@ -6,12 +6,12 @@ export default (state = {}, action) => {
 
     switch(action.type) {
         case FETCH_LOCAL_EVENTS:
-            return { ...state, data: [...action.payload.data] };
+            return { ...state, data: [...action.payload] };
         case FETCH_LOCAL_EVENT:
             let localEvent;
 
             if (action.payload)
-                localEvent = action.payload.data;
+                localEvent = action.payload;
 
             return { ...state, selectedEvent: localEvent };
         case DESELECT_LOCAL_EVENT:

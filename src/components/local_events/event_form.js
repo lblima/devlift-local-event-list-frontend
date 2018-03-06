@@ -283,11 +283,11 @@ function mapStateToProps({ eventType, localEvent }) {
     };
 }
 
-EventForm = reduxForm({
+const eventForm = reduxForm({
     validate,
     form: "EventForm",
     enableReinitialize: true
 })(EventForm);
 
 export default connect(mapStateToProps, { fetchLocalEvent, deselectEvent, createEvent, 
-                        updateEvent, fetchEventTypes, selectEventType, showEventType, clearError })(EventForm);
+                        updateEvent, fetchEventTypes, selectEventType, showEventType, clearError })(eventForm);
